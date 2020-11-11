@@ -128,4 +128,73 @@ router.delete('/', auth, async (req, res) => {
   }
 });
 
+// @route    PUT api/profile/book
+// @desc     Add a book to the profile
+// @access   Private
+router.put(
+  '/book',
+  [
+    auth,
+    [
+      check('title', 'Title is required').not().isEmpty(),
+      check('author', 'Author is required').not().isEmpty(),
+      check('numberOfPages', 'The number of pages is required').not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {
+      title,
+      author,
+      numberOfPages,
+      currentPage,
+      finished,
+      from,
+      to,
+      rating,
+    } = req.body;
+
+    let newBook;
+
+    if (finished) {
+      newBook = {
+        title: title,
+        author: author,
+        numberOfPages: Number.parseInt(numberOfPages),
+        currentPage: Number.parseInt(numberOfPages),
+        finished: true,
+        rating: Number.parseInt(rating),
+        from: from,
+        to: to,
+      };
+    } else {
+      newBook = {
+        title: title,
+        author: author,
+        numberOfPages: Number.parseInt(numberOfPages),
+        currentPage: Number.parseInt(currentPage),
+        finished: false,
+        from: from,
+      };
+    }
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+
+      profile.books.unshift(newBook);
+
+      await profile.save();
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 module.exports = router;

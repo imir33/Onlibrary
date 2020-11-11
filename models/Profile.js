@@ -25,8 +25,9 @@ const ProfileSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      nubmerOfPages: {
+      numberOfPages: {
         type: String,
+        required: true,
       },
       currentPage: {
         type: Number,
@@ -35,12 +36,10 @@ const ProfileSchema = new mongoose.Schema({
       finished: {
         type: Boolean,
         default: false,
-        required: true,
       },
       from: {
         type: Date,
         default: Date.now,
-        required: true,
       },
       to: {
         type: Date,
