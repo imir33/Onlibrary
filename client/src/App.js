@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
+import AddBook from './components/profile-form/AddBook';
 import './App.css';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
@@ -51,6 +52,7 @@ const App = () => {
                 path='/edit-profile'
                 component={EditProfile}
               />
+              <PrivateRoute exact path='/add-book' component={AddBook} />
             </Switch>
           </section>
         </Fragment>
