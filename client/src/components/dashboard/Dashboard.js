@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spiner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import Book from './Book';
 import { getCurrentProfile } from '../../actions/profile';
 
 const Dashboard = ({
@@ -26,6 +27,7 @@ const Dashboard = ({
       {profile !== null ? (
         <Fragment>
           <DashboardActions />
+          <Book books={profile.books} />
         </Fragment>
       ) : (
         <Fragment>
