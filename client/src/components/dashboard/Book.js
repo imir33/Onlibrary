@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+import { deleteBook } from '../../actions/profile';
 
-const Book = ({ books }) => {
+const Book = ({ books, deleteBook }) => {
   const booksTable = books.map((book) => (
     <tr key={book._id}>
       <td>{book.title}</td>
@@ -14,7 +15,9 @@ const Book = ({ books }) => {
           : book.currentPage + '/' + book.numberOfPages}
       </td>
       <td>
-        <button className='btn btn-danger'>Delete</button>
+        <button onClick={() => deleteBook(book._id)} className='btn btn-danger'>
+          Delete
+        </button>
       </td>
       <td>
         <button className='btn btn-primary'>Edit</button>
@@ -43,6 +46,7 @@ const Book = ({ books }) => {
 
 Book.propTypes = {
   books: PropTypes.array.isRequired,
+  deleteBook: PropTypes.func.isRequired,
 };
 
-export default Book;
+export default connect(null, { deleteBook })(Book);
