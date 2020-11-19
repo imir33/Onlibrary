@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadBook, editBook } from '../../actions/profile';
@@ -27,7 +27,6 @@ const EditBook = ({
   useEffect(() => {
     const bookID = state.id;
     loadBook(bookID);
-    console.log(book);
 
     if (book !== null) {
       setFormData({
