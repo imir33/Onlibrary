@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -20,12 +21,18 @@ const Book = ({ books, deleteBook }) => {
         </button>
       </td>
       <td>
-        <button className='btn btn-primary'>Edit</button>
+        <Link
+          to={{ pathname: '/edit-book', state: { id: book._id } }}
+          className='btn btn-primary'>
+          Edit
+        </Link>
       </td>
     </tr>
   ));
 
-  return (
+  return books.length === 0 ? (
+    ''
+  ) : (
     <Fragment>
       <h2 className='my-2'>Books</h2>
       <table className='table'>

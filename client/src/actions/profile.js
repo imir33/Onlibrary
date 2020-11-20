@@ -7,6 +7,8 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
+  LOAD_BOOK,
+  ERROR_LOADING_BOOK,
 } from './types';
 
 // Get current users profile
@@ -130,5 +132,54 @@ export const deleteAccount = () => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
+  }
+};
+
+// Edit Book
+export const editBook = (id, formData, history) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const res = await axios.put(`/api/profile/book/${id}`, formData, config);
+    dispatch({
+      type: LOAD_BOOK,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Book Edited', 'success'));
+
+    history.push('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: ERROR_LOADING_BOOK,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Load Book by ID
+export const loadBook = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/book/${id}`);
+
+    dispatch({
+      type: LOAD_BOOK,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: ERROR_LOADING_BOOK,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

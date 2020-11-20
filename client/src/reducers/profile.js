@@ -3,13 +3,17 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   UPDATE_PROFILE,
+  LOAD_BOOK,
+  ERROR_LOADING_BOOK,
 } from '../actions/types';
 
 const initalState = {
   profile: null,
   profiles: [],
   loading: true,
+  loadingBook: true,
   error: {},
+  book: null,
 };
 
 export default function (state = initalState, action) {
@@ -23,6 +27,13 @@ export default function (state = initalState, action) {
         profile: payload,
         loading: false,
       };
+    case LOAD_BOOK:
+      return {
+        ...state,
+        book: payload,
+        loadingBook: false,
+      };
+    case ERROR_LOADING_BOOK:
     case PROFILE_ERROR:
       return {
         ...state,

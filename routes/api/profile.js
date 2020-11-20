@@ -294,4 +294,27 @@ router.delete(
   }
 );
 
+// @route    GET api/profile/book/:book_id
+// @desc     Get a book by id
+// @access   Private
+
+router.get(
+  '/book/:book_id',
+  [auth, checkObjectId('book_id')],
+  async (req, res) => {
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+
+      const book = profile.books.filter(
+        (book) => book._id.toString() === req.params.book_id
+      );
+
+      return res.status(200).json(book[0]);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: 'Server error' });
+    }
+  }
+);
+
 module.exports = router;

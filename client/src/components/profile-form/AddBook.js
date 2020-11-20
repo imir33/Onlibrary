@@ -71,6 +71,7 @@ const AddBook = ({ addBook, history }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
+        <small>From</small>
         <div className='form-group'>
           <input
             type='date'
@@ -110,6 +111,7 @@ const AddBook = ({ addBook, history }) => {
             <option value='5'>5</option>
           </select>
         </div>
+        <small>To</small>
         <div className='form-group'>
           <input
             type='date'

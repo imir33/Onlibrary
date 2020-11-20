@@ -6,7 +6,7 @@ import { loadBook, editBook } from '../../actions/profile';
 
 const EditBook = ({
   location: { state },
-  profile: { book, loading },
+  profile: { book, loadingBook },
   loadBook,
   editBook,
   history,
@@ -20,9 +20,8 @@ const EditBook = ({
     rating: 0,
     from: '',
     to: '',
+    shouldUnregister: false,
   });
-
-  const [displayRatingDisabled, toggleRating] = useState(false);
 
   useEffect(() => {
     const bookID = state.id;
@@ -30,17 +29,18 @@ const EditBook = ({
 
     if (book !== null) {
       setFormData({
-        title: loading || !book.title ? '' : book.title,
-        author: loading || !book.author ? '' : book.author,
-        numberOfPages: loading || !book.numberOfPages ? '' : book.numberOfPages,
-        currentPage: loading || !book.currentPage ? '' : book.currentPage,
-        finished: loading || !book.finished ? '' : book.finished,
-        rating: loading || !book.rating ? '' : book.rating,
-        from: loading || !book.from ? '' : book.from,
-        to: loading || !book.to ? '' : book.to,
+        title: loadingBook || !book.title ? '' : book.title,
+        author: loadingBook || !book.author ? '' : book.author,
+        numberOfPages:
+          loadingBook || !book.numberOfPages ? '' : book.numberOfPages,
+        currentPage: loadingBook || !book.currentPage ? '' : book.currentPage,
+        finished: loadingBook || !book.finished ? '' : book.finished,
+        rating: loadingBook || !book.rating ? '' : book.rating,
+        from: loadingBook || !book.from ? '' : book.from,
+        to: loadingBook || !book.to ? '' : book.to,
       });
     }
-  }, [loading]);
+  }, [loadingBook]);
 
   const {
     title,
@@ -53,6 +53,8 @@ const EditBook = ({
     to,
   } = formData;
 
+  const [displayRatingDisabled, toggleRating] = useState(true);
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -61,7 +63,6 @@ const EditBook = ({
     editBook(book._id, formData, history);
   };
 
-  console.log(book);
   return (
     <Fragment>
       <h1 className='large text-primary'>Edit the Book</h1>
@@ -114,6 +115,7 @@ const EditBook = ({
               onChange={(e) => {
                 setFormData({ ...formData, finished: !finished });
                 toggleRating(!displayRatingDisabled);
+                console.log(finished);
               }}
             />{' '}
             Finished
@@ -126,7 +128,7 @@ const EditBook = ({
             id='rating'
             value={rating}
             onChange={(e) => onChange(e)}
-            disabled={displayRatingDisabled ? 'disabled' : ''}>
+            disabled={!finished ? 'disabled' : ''}>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
@@ -140,7 +142,7 @@ const EditBook = ({
             name='to'
             value={to}
             onChange={(e) => onChange(e)}
-            disabled={displayRatingDisabled ? 'disabled' : ''}
+            disabled={!finished ? 'disabled' : ''}
           />
         </div>
         <div className='form-group'>
@@ -150,7 +152,7 @@ const EditBook = ({
             name='currentPage'
             value={currentPage}
             onChange={(e) => onChange(e)}
-            disabled={displayRatingDisabled ? '' : 'disabled'}
+            disabled={!finished ? '' : 'disabled'}
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
