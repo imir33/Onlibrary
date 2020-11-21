@@ -9,6 +9,7 @@ import {
   ACCOUNT_DELETED,
   LOAD_BOOK,
   ERROR_LOADING_BOOK,
+  CLEAR_BOOK,
 } from './types';
 
 // Get current users profile
@@ -153,6 +154,8 @@ export const editBook = (id, formData, history) => async (dispatch) => {
     dispatch(setAlert('Book Edited', 'success'));
 
     history.push('/dashboard');
+
+    dispatch({ type: CLEAR_BOOK });
   } catch (err) {
     const errors = err.response.data.errors;
 

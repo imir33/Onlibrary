@@ -5,6 +5,7 @@ import {
   UPDATE_PROFILE,
   LOAD_BOOK,
   ERROR_LOADING_BOOK,
+  CLEAR_BOOK,
 } from '../actions/types';
 
 const initalState = {
@@ -34,6 +35,11 @@ export default function (state = initalState, action) {
         loadingBook: false,
       };
     case ERROR_LOADING_BOOK:
+      return {
+        ...state,
+        error: payload,
+        loadingBook: false,
+      };
     case PROFILE_ERROR:
       return {
         ...state,
@@ -45,6 +51,12 @@ export default function (state = initalState, action) {
         ...state,
         profile: null,
         loading: false,
+      };
+    case CLEAR_BOOK:
+      return {
+        ...state,
+        book: null,
+        loadingBook: true,
       };
     default:
       return state;

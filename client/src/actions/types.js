@@ -13,4 +13,5 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const LOAD_BOOK = 'LOAD_BOOK';
 export const ERROR_LOADING_BOOK = 'ERROR_LOADING_BOOK';
+export const CLEAR_BOOK = 'CLEAR_BOOK';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
