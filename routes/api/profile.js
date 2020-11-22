@@ -221,13 +221,18 @@ router.put(
       author,
       numberOfPages,
       currentPage,
-      finished,
       from,
       to,
       rating,
     } = req.body;
 
+    let finished = req.body.finished;
+
     let newBook;
+
+    if (Number.parseInt(numberOfPages) === Number.parseInt(currentPage)) {
+      finished = true;
+    }
 
     if (finished) {
       newBook = {
