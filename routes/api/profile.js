@@ -216,22 +216,22 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
+    let {
       title,
       author,
       numberOfPages,
       currentPage,
+      finished,
       from,
       to,
       rating,
     } = req.body;
 
-    let finished = req.body.finished;
-
     let newBook;
 
     if (Number.parseInt(numberOfPages) === Number.parseInt(currentPage)) {
       finished = true;
+      to = Date.now();
     }
 
     if (finished) {
