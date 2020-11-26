@@ -77,6 +77,8 @@ const EditProfile = ({
         <div className='form-group'>
           <textarea
             placeholder='A short bio of yourself'
+            rows='5'
+            cols='50'
             name='bio'
             value={bio}
             onChange={onChange}
