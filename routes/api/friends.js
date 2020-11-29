@@ -51,6 +51,9 @@ router.post(
         return res.status(404).json({ errors: [{ msg: 'User not found' }] });
       }
 
+      // check if user already is friend
+      // check if request already sent
+
       const request = new Request({
         from: req.user.id,
         to: user.id,
@@ -59,6 +62,85 @@ router.post(
       await request.save();
 
       res.json(request);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route    GET api/friends/request
+// @desc     Get all friend requests of current user
+// @access   Private
+router.get('/request', auth, async (req, res) => {
+  try {
+    const requests = await Request.find({ to: req.user.id });
+
+    if (!requests) return res.status(404).json({ msg: 'No requests found' });
+
+    res.json(requests);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/friends/request/:req_id
+// @desc     Accept a friend request
+// @access   Private
+router.put(
+  '/request/:req_id',
+  [auth, checkObjectId('req_id')],
+  async (req, res) => {
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+      if (!profile)
+        return res.status(400).json({ msg: 'User does not have a profile' });
+
+      const request = await Request.findOne({ _id: req.params.req_id });
+
+      if (req.user.id !== request.to.toString())
+        return res.status(400).json({ msg: 'Not authorized' });
+
+      profile.friends.unshift(request.from.toString());
+      await profile.save();
+
+      const friendProfile = await Profile.findOne({
+        user: request.from.toString(),
+      });
+      if (!friendProfile)
+        return res.status(400).json({ msg: 'User does not have a profile' });
+
+      friendProfile.friends.unshift(req.user.id.toString());
+      await friendProfile.save();
+
+      await Request.findByIdAndDelete({ _id: req.params.req_id });
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route    DELETE api/friends/request/:req_id
+// @desc     Decline friend request
+// @access   Private
+router.delete(
+  '/request/:req_id',
+  [auth, checkObjectId('req_id')],
+  async (req, res) => {
+    try {
+      const request = await Request.findOne({ _id: req.params.req_id });
+      if (!request) return res.status(404).json({ msg: 'Request not found' });
+
+      if (req.user.id !== request.to.toString())
+        return res.status(400).json({ msg: 'Not authorized' });
+
+      await Request.findByIdAndDelete({ _id: req.params.req_id });
+
+      res.json({ msg: 'Request declined' });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
