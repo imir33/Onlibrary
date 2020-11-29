@@ -17,9 +17,8 @@ router.get('/', auth, async (req, res) => {
       user: req.user.id,
     }).populate('user', ['name', 'avatar']);
 
-    if (!profile) {
+    if (!profile)
       return res.status(400).json({ msg: 'There is no profile for this user' });
-    }
 
     const friends = profile.friends;
 
@@ -52,7 +51,30 @@ router.post(
       }
 
       // check if user already is friend
+      const profile = await Profile.findOne({ user: req.user.id });
+      if (!profile)
+        return res
+          .status(400)
+          .json({ msg: 'There is no profile for this user' });
+
+      let checkFriend = profile.friends.filter(
+        (friend) => user._id.toString() === friend._id.toString()
+      );
+
+      console.log(checkFriend.length);
+      if (checkFriend.length !== 0) {
+        return res.status(400).json({ msg: 'The user is already a friend' });
+      }
+
       // check if request already sent
+      const checkRequest = await Request.findOne({
+        from: req.user.id,
+        to: user._id,
+      });
+      if (checkRequest)
+        return res
+          .status(400)
+          .json({ msg: 'Friend request already sent to this user' });
 
       const request = new Request({
         from: req.user.id,
