@@ -61,7 +61,6 @@ router.post(
         (friend) => user._id.toString() === friend._id.toString()
       );
 
-      console.log(checkFriend.length);
       if (checkFriend.length !== 0) {
         return res.status(400).json({ msg: 'The user is already a friend' });
       }
