@@ -11,6 +11,7 @@ import EditProfile from './components/profile-form/EditProfile';
 import AddBook from './components/profile-form/AddBook';
 import EditBook from './components/profile-form/EditBook';
 import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 import { loadUser } from './actions/auth';
@@ -57,6 +58,7 @@ const App = () => {
               <PrivateRoute exact path='/add-book' component={AddBook} />
               <PrivateRoute exact path='/edit-book' component={EditBook} />
               <PrivateRoute exact path='/posts' component={Posts} />
+              <PrivateRoute exact path='/posts/:id' component={Post} />
             </Switch>
           </section>
         </Fragment>
