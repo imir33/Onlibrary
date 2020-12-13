@@ -16,4 +16,6 @@ export const ERROR_LOADING_BOOK = 'ERROR_LOADING_BOOK';
 export const CLEAR_BOOK = 'CLEAR_BOOK';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const GET_POSTS = 'GET_POSTS';
-export const POSTS_ERROR = 'POSTS_ERROR';
+export const POST_ERROR = 'POST_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES ';
+export const DELETE_POST = 'DELETE_POST ';
