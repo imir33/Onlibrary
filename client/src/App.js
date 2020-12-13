@@ -6,11 +6,12 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
-import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
 import AddBook from './components/profile-form/AddBook';
 import EditBook from './components/profile-form/EditBook';
+import Posts from './components/posts/Posts';
+import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
@@ -55,6 +56,7 @@ const App = () => {
               />
               <PrivateRoute exact path='/add-book' component={AddBook} />
               <PrivateRoute exact path='/edit-book' component={EditBook} />
+              <PrivateRoute exact path='/posts' component={Posts} />
             </Switch>
           </section>
         </Fragment>
