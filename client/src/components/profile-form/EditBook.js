@@ -23,8 +23,8 @@ const EditBook = ({
     shouldUnregister: false,
   });
 
+  const bookID = state.id;
   useEffect(() => {
-    const bookID = state.id;
     loadBook(bookID);
 
     if (book !== null) {
@@ -40,7 +40,7 @@ const EditBook = ({
         to: loadingBook || !book.to ? '' : book.to,
       });
     }
-  }, [loadingBook]);
+  }, [bookID, loadingBook, loadBook]);
 
   const {
     title,
