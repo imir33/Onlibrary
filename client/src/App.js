@@ -11,6 +11,7 @@ import EditProfile from './components/profile-form/EditProfile';
 import AddBook from './components/profile-form/AddBook';
 import EditBook from './components/profile-form/EditBook';
 import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -46,6 +47,7 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/profiles' component={Profiles} />
+              <Route exact path='/profile/:id' component={Profile} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute
                 exact
