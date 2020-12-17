@@ -6,6 +6,7 @@ import {
   LOAD_BOOK,
   ERROR_LOADING_BOOK,
   CLEAR_BOOK,
+  GET_PROFILES,
 } from '../actions/types';
 
 const initalState = {
@@ -27,6 +28,12 @@ export default function (state = initalState, action) {
         ...state,
         profile: payload,
         loading: false,
+      };
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        laoding: false,
       };
     case LOAD_BOOK:
       return {
