@@ -36,7 +36,7 @@ const Profile = ({
             )}
           <ProfileTop profile={profile} />
           <ProfileAbout profile={profile} />
-          <div className='bg-white p-2'>
+          <div className='profile-exp bg-white p-2'>
             <h2 className='text-primary'>Books</h2>
             {profile.books.length > 0 ? (
               <ProfileBook books={profile.books} />
